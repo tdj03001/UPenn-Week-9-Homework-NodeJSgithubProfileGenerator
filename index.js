@@ -2,6 +2,7 @@ const fs = require("fs");
 const inquirer = require("inquirer");
 const util = require("util");
 const writeFileAsync = util.promisify(fs.writeFile);
+const axios = require ("axios");
 
 function promptUser() {
   return inquirer.prompt([
@@ -37,7 +38,7 @@ function promptUser() {
     },
     {
       type: "input",
-      name: "github",
+      name: "username",
       message: "Enter your GitHub Username"
     },
     {
@@ -45,7 +46,27 @@ function promptUser() {
       name: "linkedin",
       message: "Enter your LinkedIn URL."
     }
-  ]);
+  ]).then(function({ username }) {
+    const queryURL = `https://api.github.com/users/${username}`;
+
+    axios.get(queryURL).then(function(res) {
+      console.log(res.data);
+      console.log(res.data.id);
+      // const repoNames = res.data.map(function(repo) {
+      //   return repo.name;
+      // });
+
+      // const repoNamesStr = repoNames.join("\n");
+
+      // fs.writeFile("repos.txt", repoNamesStr, function(err) {
+      //   if (err) {
+      //     throw err;
+      //   }
+
+      //   console.log(`Saved ${repoNames.length} repos`);
+      // });
+    });
+  })
 }
 
 function createHTML(answers) {
@@ -80,7 +101,7 @@ function createHTML(answers) {
       <h5>My favorite movie is ${answers.movie}.</h5>
       <h4>Contact Info:</h4>
       <ul class="list-group">
-        <li class="list-group-item">GitHub username: ${answers.github}</li>
+        <li class="list-group-item">GitHub username: ${answers.username}</li>
         <li class="list-group-item">LinkedIn: ${answers.linkedin}</li>
       </ul>
     </div>
@@ -92,14 +113,22 @@ function createHTML(answers) {
 }
 
 promptUser()
-  .then((answers) => {
-    const html = createHTML(answers);
+.then((answers) => {
+  const html = createHTML(answers);
 
-    return writeFileAsync("index.html", html);
-  })
-  .then(function() {
-    console.log("Successfully wrote to index.html");
-  })
-  .catch(function(err) {
-    console.log(err);
-  });
+  return writeFileAsync("index.html", html);
+})
+.then(function() {
+  console.log("Successfully wrote to index.html");
+})
+.catch(function(err) {
+  console.log(err);
+});
+
+
+/* DEVELOPMENT NOTES=========================================
+
+- Maybe have two separate promptUser(), one for just github userID and other for rest of info, then invoke them in appropriate order?
+
+
+===========================================================*/
