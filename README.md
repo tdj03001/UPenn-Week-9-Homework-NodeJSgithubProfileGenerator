@@ -1,5 +1,5 @@
 ## UPenn-Week-9-Homework-NodeJSgithubProfileGenerator
-Please pardon our appearance while we are under construction
+Please pardon our appearance while we are under construction...
 
 ## Purpose
 
