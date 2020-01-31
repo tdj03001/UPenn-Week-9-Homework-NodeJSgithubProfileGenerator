@@ -31,4 +31,3 @@ The profile will be populated with the as many of the following as each GitHub p
 - UPenn LPS Coding Bootcamp Week 9 Activity 40
 - https://www.youtube.com/watch?v=sJspH620ZsU
 - https://nodejs.org/en/docs/
-- 
