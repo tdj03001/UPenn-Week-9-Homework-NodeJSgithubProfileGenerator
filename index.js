@@ -2,72 +2,30 @@ const fs = require("fs");
 const inquirer = require("inquirer");
 const util = require("util");
 const writeFileAsync = util.promisify(fs.writeFile);
-const axios = require ("axios");
 
-function promptUser() {
-  return inquirer.prompt([
-    {
-      type: "input",
-      name: "name",
-      message: "What is your name?"
-    },
-    {
-      type: "input",
-      name: "location",
-      message: "Where are you from?"
-    },
-    {
-      type: "input",
-      name: "color",
-      message: "What is your favorite color?"
-    },
-    {
-      type: "input",
-      name: "hobby",
-      message: "What is your favorite hobby?"
-    },
-    {
-      type: "input",
-      name: "game",
-      message: "What is your favorite game?"
-    },
-    {
-      type: "input",
-      name: "movie",
-      message: "Name your favorite movie"
-    },
-    {
-      type: "input",
-      name: "username",
-      message: "Enter your GitHub Username"
-    },
-    {
-      type: "input",
-      name: "linkedin",
-      message: "Enter your LinkedIn URL."
-    }
-  ]).then(function({ username }) {
-    const queryURL = `https://api.github.com/users/${username}`;
+const github= require("./github.js");
 
-    axios.get(queryURL).then(function(res) {
-      console.log(res.data);
-      console.log(res.data.id);
-      // const repoNames = res.data.map(function(repo) {
-      //   return repo.name;
-      // });
 
-      // const repoNamesStr = repoNames.join("\n");
+// function promptUser() {
+//   return inquirer.prompt([
+//     {
+//       type: "input",
+//       name: "name",
+//       message: "What is your name?"
+//     },
+//     {
+//       type: "input",
+//       name: "color",
+//       message: "What's your favorite color?"
+//     },
+//     {
+//       type: "input",
+//       name: "username",
+//       message: "What is your GitHub Username"
+//     }
+//   ]) 
+// }
 
-      // fs.writeFile("repos.txt", repoNamesStr, function(err) {
-      //   if (err) {
-      //     throw err;
-      //   }
-
-      //   console.log(`Saved ${repoNames.length} repos`);
-      // });
-    });
-  })
-}
 
 function createHTML(answers) {
   return `
@@ -86,23 +44,16 @@ function createHTML(answers) {
     <div class="container container-fluid">
       <img src="" class="profileImg">
       <p class="gitHubUserName"></p>
-      <a href=""><p class="location"></p></a>
       <a href=""><p class="gitHubProfile"></p></a>
-      <a href=""><p class="blog"></p></a>
-      <p class="bio"></p>
-      <p class="repos"></p>
-      <p class="followers"></p>
-      <p class="stars"></p>
-      <p class="followees"></p>
+      <p class="bio">${answers.bio}</p>
+      <p class="repos">My repos: ${answers.repos_url}</p>
+      <p class="followers"> My followers: </p>
+      <p class="stars">Starred repos: </p>
+      <p class="followees">Who I follow: </p>
       <h1 class="display-4">Hi, I'm ${answers.name}</h1>
-      <h5>I am from ${answers.location}.</h5>
-      <h5>My favorite hobby is ${answers.hobby}.</h5>
-      <h5>My favorite game is ${answers.game}.</h5>
-      <h5>My favorite movie is ${answers.movie}.</h5>
       <h4>Contact Info:</h4>
       <ul class="list-group">
         <li class="list-group-item">GitHub username: ${answers.username}</li>
-        <li class="list-group-item">LinkedIn: ${answers.linkedin}</li>
       </ul>
     </div>
   </div>
@@ -112,8 +63,10 @@ function createHTML(answers) {
 //make the HTML file mobile-first
 }
 
-promptUser()
-.then((answers) => {
+// promptUser()
+github.gitUsername()
+.then(github.getGit)
+.then(function(answers) {
   const html = createHTML(answers);
 
   return writeFileAsync("index.html", html);
@@ -128,7 +81,9 @@ promptUser()
 
 /* DEVELOPMENT NOTES=========================================
 
-- Maybe have two separate promptUser(), one for just github userID and other for rest of info, then invoke them in appropriate order?
-
+- Why does 'answers' in getGit function not correlate to user-entered responses?
+- Try two separate promptUser functions, one for just github userID and other for rest of info, then invoke them in appropriate order
+- how to convert to PDF once functional
+- 
 
 ===========================================================*/
