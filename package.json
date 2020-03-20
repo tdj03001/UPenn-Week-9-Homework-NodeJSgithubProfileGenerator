@@ -1,0 +1,29 @@
+{
+  "name": "upenn-week-9-homework-nodejsgithubprofilegenerator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "dotenv": "^8.2.0",
+    "electron": "^5.0.13",
+    "electron-html-to": "^2.6.0",
+    "electron-prebuilt": "^1.4.13",
+    "inquirer": "^7.0.4",
+    "open": "^7.0.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tdj03001/UPenn-Week-9-Homework-NodeJSgithubProfileGenerator.git"
+  },
+  "author": "Tyler Jenkins",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tdj03001/UPenn-Week-9-Homework-NodeJSgithubProfileGenerator/issues"
+  },
+  "homepage": "https://github.com/tdj03001/UPenn-Week-9-Homework-NodeJSgithubProfileGenerator#readme"
+}
