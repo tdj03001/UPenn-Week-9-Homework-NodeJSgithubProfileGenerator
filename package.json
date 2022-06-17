@@ -6,7 +6,7 @@
   "dependencies": {
     "axios": "^0.21.2",
     "dotenv": "^8.2.0",
-    "electron": "^11.5.0",
+    "electron": "^15.5.5",
     "electron-html-to": "^2.6.0",
     "electron-prebuilt": "^1.4.13",
     "inquirer": "^7.0.4",
